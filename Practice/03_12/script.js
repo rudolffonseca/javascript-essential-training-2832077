@@ -6,3 +6,12 @@
  * - Create several objects using the class.
  * - Test the objecs by calling their properties and using their methods in the console.
  */
+import Computer from "./Computer.js";
+
+const myComputer = new Computer("ASUS", "Silver", false, true, 100);
+
+console.log(myComputer);
+
+myComputer.powerSwitch();
+
+console.log(myComputer);

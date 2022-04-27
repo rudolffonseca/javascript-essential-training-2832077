@@ -64,9 +64,15 @@ const backpackList = backpackObjectArray.map((backpack) => {
       <li class="feature backpack__strap" data-side="left">Left strap length: <span>${
         backpack.strapLength.left
       } inches</span></li>
+      <label style="font-size: 15px;">Adjust left strap</label>
+      <input type="number" min="0" value="${backpack.strapLength.left}"/>
+      <button>Set!</button>
       <li class="feature backpack__strap" data-side="right">Right strap length: <span>${
         backpack.strapLength.right
       } inches</span></li>
+      <label style="font-size: 15px;">Adjust right strap</label>
+      <input type="number" min="0" value="${backpack.strapLength.right}"/>
+      <button>Set!</button>
       <li class="feature backpack__lid">Lid status: <span>${
         backpack.lidOpen ? "open" : "closed"
       }</span></li>

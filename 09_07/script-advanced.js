@@ -40,6 +40,19 @@ const lidToggle = function (event, button, newArg) {
     : (status.innerText = "closed");
 };
 
+const setStrap = function () {
+  switch (this.id) {
+    case "left_button":
+      console.log(button.value);
+      break;
+    case "right_button":
+      console.log("right");
+      break;
+    default:
+      break;
+  }
+};
+
 const backpackList = backpackObjectArray.map((backpack) => {
   let backpackArticle = document.createElement("article");
   backpackArticle.classList.add("backpack");
@@ -65,14 +78,18 @@ const backpackList = backpackObjectArray.map((backpack) => {
         backpack.strapLength.left
       } inches</span></li>
       <label style="font-size: 15px;">Adjust left strap</label>
-      <input type="number" min="0" value="${backpack.strapLength.left}"/>
-      <button>Set!</button>
+      <input id="left_strap_input" type="number" min="0" value="${
+        backpack.strapLength.left
+      }"/>
+      <button id="left_button" class="button__strap">Set!</button>
       <li class="feature backpack__strap" data-side="right">Right strap length: <span>${
         backpack.strapLength.right
       } inches</span></li>
       <label style="font-size: 15px;">Adjust right strap</label>
-      <input type="number" min="0" value="${backpack.strapLength.right}"/>
-      <button>Set!</button>
+      <input id="right_strap_input" type="number" min="0" value="${
+        backpack.strapLength.right
+      }"/>
+      <button id="right_button" class="button__strap">Set!</button>
       <li class="feature backpack__lid">Lid status: <span>${
         backpack.lidOpen ? "open" : "closed"
       }</span></li>
@@ -81,12 +98,16 @@ const backpackList = backpackObjectArray.map((backpack) => {
   `;
 
   let button = backpackArticle.querySelector(".lid-toggle");
+  let strapButtons = backpackArticle.querySelectorAll("button.button__strap");
   let newArg = "The argument I want to pass to the callback function!";
 
   // Add event listener
   button.addEventListener("click", (event) => {
     lidToggle(event, button, newArg);
   });
+
+  // Add event listner to strapButtons
+  strapButtons.forEach((button) => button.addEventListener("click", setStrap));
 
   return backpackArticle;
 });

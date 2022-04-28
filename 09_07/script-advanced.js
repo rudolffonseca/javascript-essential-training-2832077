@@ -40,13 +40,23 @@ const lidToggle = function (event, button, newArg) {
     : (status.innerText = "closed");
 };
 
-const setStrap = function () {
-  switch (this.id) {
+const setStrap = function (l_input, r_input, button) {
+  const backpackObj = backpackObjectArray.find(
+    ({ id }) => id === button.parentElement.parentElement.id
+  );
+
+  switch (button.id) {
     case "left_button":
-      console.log(button.value);
+      backpackObj.newStrapLength(l_input.value, backpackObj.strapLength.right);
+      button.parentElement.querySelector(
+        "#leftStrap span"
+      ).innerText = `${l_input.value} inches`;
       break;
     case "right_button":
-      console.log("right");
+      backpackObj.newStrapLength(backpackObj.strapLength.left, r_input.value);
+      button.parentElement.querySelector(
+        "#rightStrap span"
+      ).innerText = `${r_input.value} inches`;
       break;
     default:
       break;
@@ -74,7 +84,7 @@ const backpackList = backpackObjectArray.map((backpack) => {
       <li class="feature backpack__pockets">Number of pockets:<span> ${
         backpack.pocketNum
       }</span></li>
-      <li class="feature backpack__strap" data-side="left">Left strap length: <span>${
+      <li id="leftStrap" class="feature backpack__strap" data-side="left">Left strap length: <span>${
         backpack.strapLength.left
       } inches</span></li>
       <label style="font-size: 15px;">Adjust left strap</label>
@@ -82,7 +92,7 @@ const backpackList = backpackObjectArray.map((backpack) => {
         backpack.strapLength.left
       }"/>
       <button id="left_button" class="button__strap">Set!</button>
-      <li class="feature backpack__strap" data-side="right">Right strap length: <span>${
+      <li id="rightStrap" class="feature backpack__strap" data-side="right">Right strap length: <span>${
         backpack.strapLength.right
       } inches</span></li>
       <label style="font-size: 15px;">Adjust right strap</label>
@@ -99,6 +109,8 @@ const backpackList = backpackObjectArray.map((backpack) => {
 
   let button = backpackArticle.querySelector(".lid-toggle");
   let strapButtons = backpackArticle.querySelectorAll("button.button__strap");
+  let l_input = backpackArticle.querySelector("#left_strap_input");
+  let r_input = backpackArticle.querySelector("#right_strap_input");
   let newArg = "The argument I want to pass to the callback function!";
 
   // Add event listener
@@ -107,7 +119,9 @@ const backpackList = backpackObjectArray.map((backpack) => {
   });
 
   // Add event listner to strapButtons
-  strapButtons.forEach((button) => button.addEventListener("click", setStrap));
+  strapButtons.forEach((button) =>
+    button.addEventListener("click", () => setStrap(l_input, r_input, button))
+  );
 
   return backpackArticle;
 });
